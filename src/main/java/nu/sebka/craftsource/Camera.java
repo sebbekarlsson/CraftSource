@@ -110,6 +110,13 @@ public class Camera {
             //1 get facing block
             //2 get the face of the block where the player is looking at
             //create block "ontop / relative" to that face.
+
+            // * -- a test underneath -- * //
+            Block block = getFacingBlock();
+            Block aboveblock = CraftSource.getCurrentWorld().getBlockAtPrecise(block.getX(),block.getY()-Block.getSize(),block.getZ());
+            if(!block.getType().equals(BlockType.AIR) && aboveblock.getType().equals(BlockType.AIR)) {
+                CraftSource.getCurrentWorld().locations.add(new Block(BlockType.LOG, CraftSource.getCurrentWorld(), block.getX(), block.getY() - Block.getSize(), block.getZ()));
+            }
         }
 
         //face culling (dont draw faces that is not visible to the eye)

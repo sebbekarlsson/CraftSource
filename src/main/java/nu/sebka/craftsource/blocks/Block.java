@@ -27,7 +27,7 @@ public class Block extends Entity {
 
     public void tick() {
         if(this.equals(CraftSource.getCurrentWorld().cam.getFacingBlock())){
-            r = 0; g = 0; b = 0;
+            r = 1; g = 0; b = 1;
         }else{
             r = 1; g = 1; b = 1;
         }
