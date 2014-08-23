@@ -12,7 +12,7 @@ public class TextureBank {
     public static Texture GRASS_TEXTURE = loadTexture("png", "grass.png");
     public static Texture DIRT_TEXTURE = loadTexture("png", "dirt.png");
     public static Texture COBBLE_TEXTURE = loadTexture("png", "cobble.png");
-    public static Texture DIAMOND_ORE_TEXTURE = loadTexture("Png", "diamond_ore.png");
+    public static Texture DIAMOND_ORE_TEXTURE = loadTexture("png", "diamond_ore.png");
     public static Texture LOG_TOP = loadTexture("png", "logtop.png");
     public static Texture LOG_SIDE = loadTexture("png", "logside.png");
     public static Texture SHADOW = loadTexture("png", "shadow.png");

@@ -13,26 +13,23 @@ import org.newdawn.slick.opengl.Texture;
 public class Block extends Entity {
 
     private static float size = 0.04f;
-    public BlockType blockType;
+    private BlockType blockType;
     Random random = new Random();
 
-    public Block(World world, float x, float y, float z) {
+    public Block(BlockType type, World world, float x, float y, float z) {
         super(world, x, y, z);
-        originalTextures = textures;
-
+        blockType = type;
     }
 
-    public void tick() {
 
-       
 
-    }
+    public void tick() {}
 
     public void draw() {
 
 
-        if (textures[0] != null) {
-            textures[0].bind();
+        if (blockType.getBack() != null) {
+            blockType.getBack().bind();
         }
 
 
@@ -54,8 +51,8 @@ public class Block extends Entity {
         GL11.glEnd();
 
 
-        if (textures[1] != null) {
-            textures[1].bind();
+        if (blockType.getFront() != null) {
+            blockType.getFront().bind();
         }
 
         // White side - FRONT
@@ -74,8 +71,8 @@ public class Block extends Entity {
         GL11.glEnd();
 
 
-        if (textures[2] != null) {
-            textures[2].bind();
+        if (blockType.getRight() != null) {
+            blockType.getRight().bind();
         }
 
         // Purple side - RIGHT
@@ -94,8 +91,8 @@ public class Block extends Entity {
         GL11.glEnd();
 
 
-        if (textures[3] != null) {
-            textures[3].bind();
+        if (blockType.getLeft() != null) {
+            blockType.getLeft().bind();
         }
 
 
@@ -115,11 +112,11 @@ public class Block extends Entity {
         GL11.glEnd();
 
 
-        if (textures[4] != null) {
-            textures[4].bind();
+        if (blockType.getBottom() != null) {
+            blockType.getBottom().bind();
         }
 
-        // Blue side - TOP
+        // Blue side - Bottom
         GL11.glBegin(GL11.GL_POLYGON);
         GL11.glColor3f(1.0f, 1.0f, 1.0f);
         GL11.glNormal3f(0, 0, 1);
@@ -134,11 +131,11 @@ public class Block extends Entity {
         GL11.glVertex3f(x + -size, y + size, z + size);
         GL11.glEnd();
 
-        if (textures[5] != null) {
-            textures[5].bind();
+        if (blockType.getTop() != null) {
+            blockType.getTop().bind();
         }
 
-        // Red side - BOTTOM
+        // Red side - Top
         GL11.glBegin(GL11.GL_POLYGON);
 
         GL11.glColor3f(1.0f, 1.0f, 1.0f);
@@ -146,7 +143,7 @@ public class Block extends Entity {
 
 
         for (int i = 0; i < 32; i++) {
-            if (!(CraftSource.getCurrentWorld().getBlockAtPrecise(x, y - Block.getSize() - Block.getSize() * i, z) instanceof AirBlock)) {
+            if (!(CraftSource.getCurrentWorld().getBlockAtPrecise(x, y - Block.getSize() - Block.getSize() * i, z).getType().equals(BlockType.AIR))){
                 GL11.glColor3f(0.6f, 0.6f, 0.6f);
                 break;
 
@@ -179,6 +176,10 @@ public class Block extends Entity {
     public static float getSize() {
         return size * 2;
     }
+    public BlockType getType(){
+        return blockType;
+    }
+
 
 
 }

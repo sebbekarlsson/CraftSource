@@ -1,8 +1,8 @@
 package  nu.sebka.craftsource;
 
-import  nu.sebka.craftsource.blocks.AirBlock;
+
 import nu.sebka.craftsource.blocks.Block;
-import  nu.sebka.craftsource.blocks.GrassBlock;
+import nu.sebka.craftsource.blocks.BlockType;
 import nu.sebka.craftsource.core.Entity;
 import org.lwjgl.opengl.GL11;
 
@@ -19,7 +19,7 @@ public class World {
 
         for (int i = 0; i < 16; i += 1) {
             for (int ii = 0; ii < 16; ii += 1) {
-                locations.add(new GrassBlock(i * Block.getSize(), 0, -ii * Block.getSize()));
+                locations.add(new Block(BlockType.GRASS,this,i * Block.getSize(), 0, -ii * Block.getSize()));
 
             }
         }
@@ -65,7 +65,7 @@ public class World {
             }
         }
 
-        return new AirBlock((float) x, (float) y, (float) z);
+        return new Block(BlockType.AIR,this,(float) x, (float) y, (float) z);
     }
 
 
@@ -82,7 +82,7 @@ public class World {
             }
         }
 
-        return new AirBlock((float) x, (float) y, (float) z);
+        return new Block(BlockType.AIR,this,(float) x, (float) y, (float) z);
     }
 
 }

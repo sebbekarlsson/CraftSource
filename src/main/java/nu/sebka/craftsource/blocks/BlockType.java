@@ -1,5 +1,6 @@
 package nu.sebka.craftsource.blocks;
 
+import nu.sebka.craftsource.TextureBank;
 import org.newdawn.slick.opengl.Texture;
 
 /**
@@ -7,7 +8,11 @@ import org.newdawn.slick.opengl.Texture;
  */
 public enum BlockType {
 
-    AIR(null, null, null, null, null, null);
+    AIR(null, null, null, null, null, null),
+    LOG(TextureBank.LOG_TOP, TextureBank.LOG_TOP, TextureBank.LOG_SIDE, TextureBank.LOG_SIDE, TextureBank.LOG_SIDE, TextureBank.LOG_SIDE),
+    COBBLE(TextureBank.COBBLE_TEXTURE, TextureBank.COBBLE_TEXTURE, TextureBank.COBBLE_TEXTURE, TextureBank.COBBLE_TEXTURE, TextureBank.COBBLE_TEXTURE ,TextureBank.COBBLE_TEXTURE),
+    GRASS(TextureBank.GRASS_TEXTURE, TextureBank.DIRT_TEXTURE,TextureBank.DIRT_TEXTURE,TextureBank.DIRT_TEXTURE,TextureBank.DIRT_TEXTURE,TextureBank.DIRT_TEXTURE);
+
 
     private Texture top, bottom, front, back, left, right;
 
