@@ -1,11 +1,10 @@
 package  nu.sebka.craftsource.blocks;
 
-import  nu.sebka.craftsource.Block;
 import  nu.sebka.craftsource.TextureBank;
 
 public class CobbleBlock extends Block {
 
-    public CobbleBlock(float x, float y, float z) {
+    public CobbleBlock(World float x, float y, float z) {
         super(x, y, z);
         textures[0] = TextureBank.COBBLE_TEXTURE;
         textures[1] = TextureBank.COBBLE_TEXTURE;

@@ -12,7 +12,7 @@
 
     <properties>
         <finalName>${project.artifactId}-${project.version}.jar</finalName>
-        <main.class>nu.sebka.craftsource.Main</main.class>
+        <main.class>nu.sebka.craftsource.CraftSource</main.class>
         <natives>${basedir}/target/natives/</natives>
         <release.natives>natives/</release.natives>
     </properties>

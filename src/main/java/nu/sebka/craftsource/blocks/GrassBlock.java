@@ -1,6 +1,5 @@
 package  nu.sebka.craftsource.blocks;
 
-import  nu.sebka.craftsource.Block;
 import  nu.sebka.craftsource.TextureBank;
 
 public class GrassBlock extends Block {

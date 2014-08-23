@@ -1,33 +1,31 @@
-package  nu.sebka.craftsource;
+package nu.sebka.craftsource.blocks;
 
 import java.util.Random;
 
-import  nu.sebka.craftsource.blocks.AirBlock;
-import  nu.sebka.craftsource.blocks.CobbleBlock;
+import nu.sebka.craftsource.CraftSource;
+import nu.sebka.craftsource.World;
 
+import nu.sebka.craftsource.core.Entity;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
 
 
-public class Block extends Instance {
+public class Block extends Entity {
 
     private static float size = 0.04f;
-    public Texture[] textures = new Texture[6];
-    public Texture[] originalTextures = new Texture[6];
+    public BlockType blockType;
     Random random = new Random();
 
-    public Block(float x, float y, float z) {
-        super(x, y, z);
+    public Block(World world, float x, float y, float z) {
+        super(world, x, y, z);
         originalTextures = textures;
 
     }
 
-    @Override
     public void tick() {
 
     }
 
-    @Override
     public void draw() {
 
 
@@ -146,7 +144,7 @@ public class Block extends Instance {
 
 
         for (int i = 0; i < 32; i++) {
-            if (!(Main.getCurrentWorld().getBlockAtPrecise(x, y - Block.getSize() - Block.getSize() * i, z) instanceof AirBlock)) {
+            if (!(CraftSource.getCurrentWorld().getBlockAtPrecise(x, y - Block.getSize() - Block.getSize() * i, z) instanceof AirBlock)) {
                 GL11.glColor3f(0.6f, 0.6f, 0.6f);
                 break;
 

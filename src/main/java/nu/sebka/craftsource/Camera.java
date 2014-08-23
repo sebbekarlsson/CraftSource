@@ -13,6 +13,7 @@ import static org.lwjgl.util.glu.GLU.gluPerspective;
 import java.util.Random;
 
 import  nu.sebka.craftsource.blocks.AirBlock;
+import nu.sebka.craftsource.blocks.Block;
 import  nu.sebka.craftsource.blocks.GrassBlock;
 
 import org.lwjgl.LWJGLException;
@@ -85,9 +86,9 @@ public class Camera {
         boolean canmove = true;
         float fallspeed = 0.01f;
 
-        System.out.println(Main.getCurrentWorld().getBlockAt(x, y + Block.getSize() * 2, z));
+        System.out.println(CraftSource.getCurrentWorld().getBlockAt(x, y + Block.getSize() * 2, z));
 
-        if (Main.getCurrentWorld().getBlockAt(getX(), getY() + Block.getSize() * 2, getZ()) instanceof AirBlock) {
+        if (CraftSource.getCurrentWorld().getBlockAt(getX(), getY() + Block.getSize() * 2, getZ()) instanceof AirBlock) {
             falling = true;
         }
 
@@ -103,10 +104,10 @@ public class Camera {
             if (Keyboard.isKeyDown(Keyboard.KEY_RETURN)) {
                 if (Keyboard.getEventKeyState()) {
                     System.out.println("BLOCK PLACE");
-                    Block block = Main.getCurrentWorld().getBlockAt(x, y + Block.getSize() * 2, z);
-                    Block topblock = Main.getCurrentWorld().getBlockAtPrecise(block.x, block.y - Block.getSize() * 2, block.z);
+                    Block block = CraftSource.getCurrentWorld().getBlockAt(x, y + Block.getSize() * 2, z);
+                    Block topblock = CraftSource.getCurrentWorld().getBlockAtPrecise(block.getX(), block.getY() - Block.getSize() * 2, block.getZ());
                     if (topblock instanceof AirBlock) {
-                        Main.getCurrentWorld().instances.add(new GrassBlock(block.x, block.y - Block.getSize(), block.z));
+                        CraftSource.getCurrentWorld().locations.add(new GrassBlock(block.getX(), block.getY() - Block.getSize(), block.getZ()));
                     }
                 }
             }

@@ -8,7 +8,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
-public class Main {
+public class CraftSource {
 
     public static int SCALE = 2;
     public static int WIDTH = (640) * SCALE;
@@ -18,7 +18,7 @@ public class Main {
     public static int worldIndex = 0;
 
 
-    public Main() {
+    public CraftSource() {
         try {
             Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
             Display.setTitle("Minecraft");
@@ -73,7 +73,7 @@ public class Main {
         } else if (operatingSystem.contains("Sun")) {
             System.setProperty("org.lwjgl.librarypath", new File(home, "solaris").getAbsolutePath());
         }
-        new Main();
+        new CraftSource();
     }
 
     public static World getCurrentWorld() {
