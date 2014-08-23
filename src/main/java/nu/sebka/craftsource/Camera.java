@@ -88,11 +88,31 @@ public class Camera {
 
         System.out.println(CraftSource.getCurrentWorld().getBlockAt(x, y + Block.getSize() * 2, z));
 
-        if (!(CraftSource.getCurrentWorld().getBlockAt(getX(), getY() + Block.getSize() * 2, getZ()).getType().equals(BlockType.AIR))) {
+        if (CraftSource.getCurrentWorld().getBlockAt(getX(), getY() + Block.getSize() * 2, getZ()).getType().equals(BlockType.AIR)) {
             falling = true;
         }
 
+        if (falling) {
+            fallspeed += 0.00016f;
+            setY(getY() + fallspeed);
+        } else {
+            fallspeed = 0.01f;
+        }
 
+
+        //Destroy the facing block when pressing left mouse button
+        if(Mouse.isButtonDown(0)){
+            CraftSource.getCurrentWorld().locations.remove(getFacingBlock());
+        }
+
+        //Create a block where the player is looking
+        if(Mouse.isButtonDown(1)){
+            //1 get facing block
+            //2 get the face of the block where the player is looking at
+            //create block "ontop / relative" to that face.
+        }
+
+        //face culling (dont draw faces that is not visible to the eye)
         if (Keyboard.isKeyDown(Keyboard.KEY_C)) {
             Random random = new Random();
             GL11.glCullFace(random.nextInt(5));
@@ -126,12 +146,7 @@ public class Camera {
 
         }
 
-        if (falling) {
-            fallspeed += 0.00016f;
-            setY(getY() + fallspeed);
-        } else {
-            fallspeed = 0.01f;
-        }
+
 
 
         if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
@@ -199,5 +214,10 @@ public class Camera {
     public void move(float dir, float amt) {
         z += amt * Math.sin(Math.toRadians(ry + 90 * dir));
         x += amt * Math.cos(Math.toRadians(ry + 90 * dir));
+    }
+
+    //Get the block that the player is looking at
+    public Block getFacingBlock(){
+        return null;
     }
 }
