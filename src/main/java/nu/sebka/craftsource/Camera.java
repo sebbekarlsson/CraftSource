@@ -86,7 +86,7 @@ public class Camera {
         boolean canmove = true;
         float fallspeed = 0.01f;
 
-        System.out.println(CraftSource.getCurrentWorld().getBlockAt(x, y + Block.getSize() * 2, z));
+
 
         if (CraftSource.getCurrentWorld().getBlockAt(getX(), getY() + Block.getSize() * 2, getZ()).getType().equals(BlockType.AIR)) {
             falling = true;
@@ -217,7 +217,22 @@ public class Camera {
     }
 
     //Get the block that the player is looking at
-    public Block getFacingBlock(){
-        return null;
+    public Block getFacingBlock() {
+        Block block = null;
+
+        for (int i = 0; i < 7; i++) {
+            block = CraftSource.getCurrentWorld().getBlockAt(
+
+                    x + i * 0.05f * Math.cos(Math.toRadians(ry + 90)),
+                    y + i * 0.05f * Math.tan(Math.toRadians(rx)),
+                    z + i * 0.05f * Math.sin(Math.toRadians(ry + 90))
+            );
+
+            if(!block.getType().equals(BlockType.AIR)){
+                break;
+            }
+        }
+
+        return block;
     }
 }

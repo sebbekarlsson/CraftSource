@@ -15,6 +15,8 @@ public class Block extends Entity {
     private static float size = 0.04f;
     private BlockType blockType;
     Random random = new Random();
+    float r = 1,g = 1, b = 1;
+
 
     public Block(BlockType type, World world, float x, float y, float z) {
         super(world, x, y, z);
@@ -23,9 +25,17 @@ public class Block extends Entity {
 
 
 
-    public void tick() {}
+    public void tick() {
+        if(this.equals(CraftSource.getCurrentWorld().cam.getFacingBlock())){
+            r = 0; g = 0; b = 0;
+        }else{
+            r = 1; g = 1; b = 1;
+        }
+    }
 
     public void draw() {
+
+
 
 
         if (blockType.getBack() != null) {
@@ -37,7 +47,7 @@ public class Block extends Entity {
         GL11.glBegin(GL11.GL_POLYGON);
 
 
-        GL11.glColor3f(1.0f, 1.0f, 1.0f);
+        GL11.glColor3f(r, g, b);
         GL11.glNormal3f(-1, 0, 0);
 
         GL11.glTexCoord2f(1, 0);
@@ -57,7 +67,7 @@ public class Block extends Entity {
 
         // White side - FRONT
         GL11.glBegin(GL11.GL_POLYGON);
-        GL11.glColor3f(1.0f, 1.0f, 1.0f);
+        GL11.glColor3f(r, g, b);
         GL11.glNormal3f(1, 0, 0);
 
         GL11.glTexCoord2f(1, 0);
@@ -77,7 +87,7 @@ public class Block extends Entity {
 
         // Purple side - RIGHT
         GL11.glBegin(GL11.GL_POLYGON);
-        GL11.glColor3f(1.0f, 1.0f, 1.0f);
+        GL11.glColor3f(r, g, b);
         GL11.glNormal3f(0, -1, 0);
 
         GL11.glTexCoord2f(1, 0);
@@ -98,7 +108,7 @@ public class Block extends Entity {
 
         // Green side - LEFT
         GL11.glBegin(GL11.GL_POLYGON);
-        GL11.glColor3f(1.0f, 1.0f, 1.0f);
+        GL11.glColor3f(r, g, b);
         GL11.glNormal3f(0, 0, -1);
 
         GL11.glTexCoord2f(1, 0);
@@ -118,7 +128,7 @@ public class Block extends Entity {
 
         // Blue side - Bottom
         GL11.glBegin(GL11.GL_POLYGON);
-        GL11.glColor3f(1.0f, 1.0f, 1.0f);
+        GL11.glColor3f(r, g, b);
         GL11.glNormal3f(0, 0, 1);
 
         GL11.glTexCoord2f(1, 0);
@@ -138,7 +148,7 @@ public class Block extends Entity {
         // Red side - Top
         GL11.glBegin(GL11.GL_POLYGON);
 
-        GL11.glColor3f(1.0f, 1.0f, 1.0f);
+        GL11.glColor3f(r, g, b);
         GL11.glNormal3f(0, 1, 0);
 
 
@@ -148,7 +158,7 @@ public class Block extends Entity {
                 break;
 
             } else {
-                GL11.glColor3f(1.0f, 1.0f, 1.0f);
+                GL11.glColor3f(r, g, b);
             }
 
 
