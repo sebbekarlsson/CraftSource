@@ -15,6 +15,7 @@ public class TextureBank {
     public static Texture DIAMOND_ORE_TEXTURE = loadTexture("png", "diamond_ore.png");
     public static Texture LOG_TOP = loadTexture("png", "logtop.png");
     public static Texture LOG_SIDE = loadTexture("png", "logside.png");
+    public static Texture PLANKS_TEXTURE = loadTexture("png","planks.png");
     public static Texture SHADOW = loadTexture("png", "shadow.png");
 
 
@@ -26,6 +27,7 @@ public class TextureBank {
             GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
 
             GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
+
             return texture;
 
 

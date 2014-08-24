@@ -115,7 +115,7 @@ public class Camera {
             Block block = getFacingBlock();
             Block aboveblock = CraftSource.getCurrentWorld().getBlockAtPrecise(block.getX(),block.getY()-Block.getSize(),block.getZ());
             if(!block.getType().equals(BlockType.AIR) && aboveblock.getType().equals(BlockType.AIR)) {
-                CraftSource.getCurrentWorld().locations.add(new Block(BlockType.LOG, CraftSource.getCurrentWorld(), block.getX(), block.getY() - Block.getSize(), block.getZ()));
+                CraftSource.getCurrentWorld().locations.add(new Block(BlockType.PLANKS, CraftSource.getCurrentWorld(), block.getX(), block.getY() - Block.getSize(), block.getZ()));
             }
         }
 

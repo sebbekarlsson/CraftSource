@@ -11,8 +11,8 @@ public enum BlockType {
     AIR(null, null, null, null, null, null),
     LOG(TextureBank.LOG_TOP, TextureBank.LOG_TOP, TextureBank.LOG_SIDE, TextureBank.LOG_SIDE, TextureBank.LOG_SIDE, TextureBank.LOG_SIDE),
     COBBLE(TextureBank.COBBLE_TEXTURE, TextureBank.COBBLE_TEXTURE, TextureBank.COBBLE_TEXTURE, TextureBank.COBBLE_TEXTURE, TextureBank.COBBLE_TEXTURE ,TextureBank.COBBLE_TEXTURE),
-    GRASS(TextureBank.GRASS_TEXTURE, TextureBank.DIRT_TEXTURE,TextureBank.DIRT_TEXTURE,TextureBank.DIRT_TEXTURE,TextureBank.DIRT_TEXTURE,TextureBank.DIRT_TEXTURE);
-
+    GRASS(TextureBank.GRASS_TEXTURE, TextureBank.DIRT_TEXTURE,TextureBank.DIRT_TEXTURE,TextureBank.DIRT_TEXTURE,TextureBank.DIRT_TEXTURE,TextureBank.DIRT_TEXTURE),
+    PLANKS(TextureBank.PLANKS_TEXTURE, TextureBank.PLANKS_TEXTURE,TextureBank.PLANKS_TEXTURE,TextureBank.PLANKS_TEXTURE,TextureBank.PLANKS_TEXTURE,TextureBank.PLANKS_TEXTURE);
 
     private Texture top, bottom, front, back, left, right;
 
