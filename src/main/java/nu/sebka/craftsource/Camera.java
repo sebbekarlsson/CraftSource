@@ -16,10 +16,13 @@ import java.util.Random;
 import nu.sebka.craftsource.blocks.Block;
 
 import nu.sebka.craftsource.blocks.BlockType;
+import nu.sebka.craftsource.core.ModelBank;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
+
+import javax.vecmath.Vector3f;
 
 public class Camera {
     private float x;
@@ -77,6 +80,7 @@ public class Camera {
         glRotatef(rz, 0, 0, 1);
         glTranslatef(-x, -y, -z);
 
+        getPlaceLocation();
 
     }
 
@@ -114,9 +118,18 @@ public class Camera {
             // * -- a test underneath -- * //
             Block block = getFacingBlock();
             Block aboveblock = CraftSource.getCurrentWorld().getBlockAtPrecise(block.getX(),block.getY()-Block.getSize(),block.getZ());
-            if(!block.getType().equals(BlockType.AIR) && aboveblock.getType().equals(BlockType.AIR)) {
-                CraftSource.getCurrentWorld().locations.add(new Block(BlockType.PLANKS, CraftSource.getCurrentWorld(), block.getX(), block.getY() - Block.getSize(), block.getZ()));
-            }
+
+                Vector3f pos = getPlaceLocation();
+                if(pos != null){
+
+                    CraftSource.getCurrentWorld().locations.add(new Block(BlockType.PLANKS,CraftSource.getCurrentWorld(),pos.x,pos.y,pos.z));
+                }
+                //if (!block.getType().equals(BlockType.AIR) && aboveblock.getType().equals(BlockType.AIR)) {
+                    //CraftSource.getCurrentWorld().locations.add(new Block(BlockType.PLANKS, CraftSource.getCurrentWorld(), block.getX(), block.getY() - Block.getSize(), block.getZ()));
+                //}
+
+
+
         }
 
         //face culling (dont draw faces that is not visible to the eye)
@@ -228,12 +241,12 @@ public class Camera {
         Block block = null;
 
         for (int i = 0; i < 7; i++) {
-            block = CraftSource.getCurrentWorld().getBlockAt(
+            float xpos = (float)(x + i * 0.05f * Math.cos(Math.toRadians(ry + 90)));
+            float ypos = (float)(y + i * 0.05f * Math.tan(Math.toRadians(rx)));
+            float zpos = (float)(z + i * 0.05f * Math.sin(Math.toRadians(ry + 90)));
+            block = CraftSource.getCurrentWorld().getBlockAt(xpos,ypos,zpos);
 
-                    x + i * 0.05f * Math.cos(Math.toRadians(ry + 90)),
-                    y + i * 0.05f * Math.tan(Math.toRadians(rx)),
-                    z + i * 0.05f * Math.sin(Math.toRadians(ry + 90))
-            );
+
 
             if(!block.getType().equals(BlockType.AIR)){
                 break;
@@ -241,5 +254,88 @@ public class Camera {
         }
 
         return block;
+    }
+
+    public Vector3f getFaceHit(){
+        float xx = 0;
+        float yy = 0;
+        float zz = 0;
+        for (int i = 0; i < 7; i++) {
+             xx = (float) (x + i * 0.05f * Math.cos(Math.toRadians(ry + 90)));
+             yy = (float) (y + i * 0.05f * Math.tan(Math.toRadians(rx)));
+             zz = (float) (z + i * 0.05f * Math.sin(Math.toRadians(ry + 90)));
+            Block block = CraftSource.getCurrentWorld().getBlockAt(xx, yy, zz);
+
+
+            if (!block.getType().equals(BlockType.AIR)) {
+                break;
+            }
+
+
+        }
+        return new Vector3f(xx, yy, zz);
+    }
+
+    public Vector3f getPlaceLocation(){
+        Vector3f hv = getFaceHit();
+        float xpos = 0;
+        float ypos = 0;
+        float zpos = 0;
+        for (int i = 0; i < 7; i++) {
+            xpos = (float)(x + i * 0.05f * Math.cos(Math.toRadians(ry + 90)));
+            ypos = (float)(y + i * 0.05f * Math.tan(Math.toRadians(rx)));
+            zpos = (float)(z + i * 0.05f * Math.sin(Math.toRadians(ry + 90)));
+            Block block = getFacingBlock();
+            hv = getFaceHit();
+            boolean xmin = false;
+            boolean xmax = false;
+            boolean ymin = false;
+            boolean ymax = false;
+            boolean zmin = false;
+            boolean zmax = false;
+
+
+
+
+
+            if(getFaceHit().y >= block.getY()+Block.getSize()/2 && getFaceHit().y <= block.getY() + Block.getSize()){
+                hv = new Vector3f(block.getX(),block.getY()+Block.getSize(),block.getZ());
+                ymax = true;
+            }
+            if(getFaceHit().y <= block.getY() && getFaceHit().y >= block.getY() - Block.getSize()){
+                hv = new Vector3f(block.getX(),block.getY()-Block.getSize(),block.getZ());
+                ymin = true;
+            }
+
+
+            if(getFaceHit().x <= block.getX() && getFaceHit().x >= block.getX() - Block.getSize() &&!(ymax) && !(ymin)){
+                hv = new Vector3f(block.getX()-Block.getSize(),block.getY(),block.getZ());
+                xmin = true;
+            }
+            if(getFaceHit().x >= block.getX() && getFaceHit().x <= block.getX() + Block.getSize()&&!(ymax) && !(ymin)){
+                hv = new Vector3f(block.getX()+Block.getSize(),block.getY(),block.getZ());
+                xmax = true;
+            }
+
+            if(getFaceHit().z >= block.getZ() && getFaceHit().z <= block.getZ() + Block.getSize() && !(xmin) &&!(ymax) && !(ymin) ){
+                hv = new Vector3f(block.getX(),block.getY(),block.getZ()+Block.getSize());
+                zmax = true;
+            }
+            if(getFaceHit().z <= block.getZ() && getFaceHit().z >= block.getZ() - Block.getSize()&& !(xmax)&&!(ymax) && !(ymin)){
+                hv = new Vector3f(block.getX(),block.getY(),block.getZ()-Block.getSize());
+                zmin = true;
+
+            }
+
+
+            GL11.glColor3f(0f,1f,0f);
+            ModelBank.cube(hv.x,hv.y,hv.z,Block.getSize()/2,BlockType.PLANKS);
+            return hv;
+
+        }
+
+
+        return null;
+
     }
 }

@@ -23,6 +23,8 @@ public class World {
 
             }
         }
+
+        locations.add(new Block(BlockType.COBBLE,this,Block.getSize()*3,-Block.getSize()*4,-Block.getSize()*3));
     }
 
     public void tick() {
