@@ -12,17 +12,17 @@ import static org.lwjgl.util.glu.GLU.gluPerspective;
 
 import java.util.Random;
 
-
 import nu.sebka.craftsource.blocks.Block;
-
 import nu.sebka.craftsource.blocks.BlockType;
 import nu.sebka.craftsource.core.ModelBank;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.vector.Vector3f;
 
-import javax.vecmath.Vector3f;
+
 
 public class Camera {
     private float x;

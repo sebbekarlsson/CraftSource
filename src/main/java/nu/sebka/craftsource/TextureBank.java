@@ -22,7 +22,7 @@ public class TextureBank {
     public static Texture loadTexture(String format, String path) {
         try {
 
-            Texture texture = TextureLoader.getTexture(format, ResourceLoader.getResourceAsStream(path));
+            Texture texture = TextureLoader.getTexture(format, ResourceLoader.getResourceAsStream("src/main/resources/"+path));
 
             GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
 
