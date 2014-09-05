@@ -36,7 +36,22 @@ public class Camera {
 	private float aspect;
 	private float near;
 	private float far;
-	BlockType currentBlockType = BlockType.PLANKS;
+	BlockType[] types = new BlockType[]{
+			BlockType.LOG,
+			BlockType.PLANKS,
+			BlockType.GRASS,
+			BlockType.COBBLE,
+			BlockType.GLASS,
+			BlockType.SAND,
+			BlockType.GRAVEL,
+			BlockType.LEAF,
+			BlockType.PUMPKIN,
+			BlockType.CHEST,
+			BlockType.FURNACE,
+			BlockType.WHEAT,
+			BlockType.WORKBENCH
+	};
+	public static int blockIndex = 0;
 
 	public Camera(float fov, float aspect, float near, float far) {
 		x = 0;
@@ -62,7 +77,8 @@ public class Camera {
 		gluPerspective(fov, aspect, near, far);
 		glMatrixMode(GL_MODELVIEW);
 		glEnable(GL_DEPTH_TEST);
-
+		glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
 		//...
 		// enable face culling
@@ -94,7 +110,7 @@ public class Camera {
 
 
 
-		if (CraftSource.getCurrentWorld().getBlockAt(getX(), getY() + Block.getSize() * 2, getZ()).getType().equals(BlockType.AIR)) {
+		if (CraftSource.getCurrentWorld().getBlockAt(getX(), getY() + Block.getSize() + Block.getSize() - 0.01f, getZ()).getType().equals(BlockType.AIR)) {
 			falling = true;
 		}
 
@@ -105,14 +121,8 @@ public class Camera {
 			fallspeed = 0.01f;
 		}
 
-		if(Keyboard.isKeyDown(Keyboard.KEY_1)){
-			currentBlockType = BlockType.PLANKS;
-			
-		}
 		
-		if(Keyboard.isKeyDown(Keyboard.KEY_2)){
-			currentBlockType = BlockType.LOG;
-		}
+		
 		
 		
 		while(Mouse.next()){
@@ -121,10 +131,18 @@ public class Camera {
 				if(Mouse.isButtonDown(0)){
 					CraftSource.getCurrentWorld().locations.remove(getFacingBlock());
 				}
+			
 			}
 
-			
-			
+			if(Mouse.isButtonDown(2)){
+			if(Mouse.getDWheel() >= 120){
+				if(blockIndex < types.length-1)
+				blockIndex += 1;
+			}else{
+				if(blockIndex > 0)
+				blockIndex -= 1;
+			}
+			}
 
 			//Create a block where the player is looking
 			if(Mouse.isButtonDown(1)){
@@ -140,7 +158,7 @@ public class Camera {
 				if(Mouse.getEventButtonState()){
 					if(pos != null){
 						if(CraftSource.getCurrentWorld().getBlockAtPrecise(pos.x, pos.y, pos.z).getType().equals(BlockType.AIR))
-							CraftSource.getCurrentWorld().locations.add(new Block(currentBlockType,CraftSource.getCurrentWorld(),pos.x,pos.y,pos.z));
+							CraftSource.getCurrentWorld().locations.add(new Block(types[blockIndex],CraftSource.getCurrentWorld(),pos.x,pos.y,pos.z));
 					}
 				}
 				//if (!block.getType().equals(BlockType.AIR) && aboveblock.getType().equals(BlockType.AIR)) {
@@ -349,8 +367,10 @@ public class Camera {
 			}
 
 
+			if(!getFacingBlock().getType().equals(BlockType.AIR)){
 			GL11.glColor3f(0f,1f,0f);
-			ModelBank.cube(hv.x,hv.y,hv.z,Block.getSize()/2,currentBlockType);
+			ModelBank.cube(hv.x,hv.y,hv.z,Block.getSize()/2,types[blockIndex]);
+			}
 			return hv;
 
 		}

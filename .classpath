@@ -2,8 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="lib" path="lib/slick-util.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/Users/sebastiankarlsson/Downloads/lwjgl-2.9.1/jar/lwjgl_util.jar"/>
-	<classpathentry kind="lib" path="/Users/sebastiankarlsson/Downloads/lwjgl-2.9.1/jar/lwjgl.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Sebastian/Desktop/lwjgl-2.9.1/jar/lwjgl.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Sebastian/Desktop/lwjgl-2.9.1/jar/lwjgl_util.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre8"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

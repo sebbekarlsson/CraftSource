@@ -17,6 +17,19 @@ public class TextureBank {
     public static Texture LOG_SIDE = loadTexture("png", "logside.png");
     public static Texture PLANKS_TEXTURE = loadTexture("png","planks.png");
     public static Texture SHADOW = loadTexture("png", "shadow.png");
+    public static Texture GLASS = loadTexture("png","glass.png");
+    public static Texture SAND = loadTexture("png","sand.png");
+    public static Texture GRAVEL = loadTexture("png","gravel.png");
+    public static Texture LEAF = loadTexture("png","leaf.png");
+    public static Texture PUMPKIN_SIDE = loadTexture("png","pumpkin_side.png");
+    public static Texture PUMPKIN_TOP = loadTexture("png","pumpkin_top.png");
+    public static Texture CHEST_SIDE = loadTexture("png","chest_side.png");
+    public static Texture FURNACE_FRONT = loadTexture("png","furnace_front.png");
+    public static Texture FURNACE_TOP = loadTexture("png","furnace_top.png");
+    public static Texture WHEAT = loadTexture("png","wheat.png");
+    public static Texture EMPTY = loadTexture("png","empty.png");
+    public static Texture WORKBENCH_SIDE = loadTexture("png","workbench_side.png");
+    public static Texture WORKBENCH_TOP = loadTexture("png","workbench_top.png");
 
 
     public static Texture loadTexture(String format, String path) {

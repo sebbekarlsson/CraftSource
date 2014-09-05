@@ -75,9 +75,9 @@ public class World {
         for (int i = 0; i < locations.size(); i++) {
             Entity location = locations.get(i);
             if (
-                    x >= location.getX() - Block.getSize() / 2 && x <= location.getX() + Block.getSize() &&
-                            y >= location.getY() - Block.getSize() / 2 && y <= location.getY() + Block.getSize() &&
-                            z >= location.getZ() - Block.getSize() / 2 && z <= location.getZ() + Block.getSize()
+                    		x > location.getX() - Block.getSize() / 2 && x < location.getX() + Block.getSize() &&
+                            y > location.getY() - Block.getSize() / 2 && y < location.getY() + Block.getSize() &&
+                            z > location.getZ() - Block.getSize() / 2 && z < location.getZ() + Block.getSize()
 
                     ) {
                 return (Block) location;
