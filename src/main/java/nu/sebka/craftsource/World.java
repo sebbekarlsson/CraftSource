@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class World {
 
     public ArrayList<Entity> locations = new ArrayList<Entity>();
-    public Camera cam = new Camera(70, (float) CraftSource.WIDTH / (float) CraftSource.HEIGHT, 0.03f, 1000);
+    public Camera cam = new Camera(100, (float) CraftSource.WIDTH / (float) CraftSource.HEIGHT, 0.03f, 1000);
 
     public World() {
 
