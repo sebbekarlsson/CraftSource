@@ -18,12 +18,12 @@ public class BlockModel {
 	
 	
 	public void draw(float x, float y, float z, float size, BlockType type){
-		GL11.glPushMatrix();
+		
         if (type.getBack() != null) {
             type.getBack().bind();
         }
 
-
+        
         // White side - BACK
 
         GL11.glBegin(GL11.GL_POLYGON);
@@ -38,9 +38,9 @@ public class BlockModel {
         GL11.glTexCoord2f(1, 1);
         GL11.glVertex3f(x + -size, y + -size, z + size);
         GL11.glEnd();
-        GL11.glPopMatrix();
+        
 
-        GL11.glPushMatrix();
+        
         if (type.getFront() != null) {
             type.getFront().bind();
         }
@@ -58,9 +58,9 @@ public class BlockModel {
         GL11.glTexCoord2f(1, 1);
         GL11.glVertex3f(x + -size, y + -size, z - size);
         GL11.glEnd();
-        GL11.glPopMatrix();
+        
 
-        GL11.glPushMatrix();
+        
         if (type.getRight() != null) {
             type.getRight().bind();
         }
@@ -78,9 +78,9 @@ public class BlockModel {
         GL11.glTexCoord2f(1, 1);
         GL11.glVertex3f(x + size, y + -size, z + size);
         GL11.glEnd();
-        GL11.glPopMatrix();
+        
 
-        GL11.glPushMatrix();
+        
         if (type.getLeft() != null) {
             type.getLeft().bind();
         }
@@ -99,9 +99,9 @@ public class BlockModel {
         GL11.glTexCoord2f(1, 1);
         GL11.glVertex3f(x + -size, y + -size, z + -size);
         GL11.glEnd();
-        GL11.glPopMatrix();
+        
 
-        GL11.glPushMatrix();
+        
         if (type.getBottom() != null) {
             type.getBottom().bind();
         }
@@ -119,10 +119,10 @@ public class BlockModel {
         GL11.glTexCoord2f(1, 1);
         GL11.glVertex3f(x + -size, y + size, z + size);
         GL11.glEnd();
-        GL11.glPopMatrix();
+        
 
 
-        GL11.glPushMatrix();
+        
         if (type.getTop() != null) {
             type.getTop().bind();
         }
@@ -142,7 +142,7 @@ public class BlockModel {
         GL11.glVertex3f(x + -size, y + -size, z + -size);
         GL11.glEnd();
 
-        GL11.glPopMatrix();
+        
 	}
 	
 }

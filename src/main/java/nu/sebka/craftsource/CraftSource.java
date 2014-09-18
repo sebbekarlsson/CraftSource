@@ -22,6 +22,7 @@ public class CraftSource {
         try {
             Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
             Display.setTitle("Minecraft");
+            
             Display.create();
             worlds.add(new World());
         } catch (LWJGLException e) {
@@ -31,10 +32,10 @@ public class CraftSource {
 
 
         while (!Display.isCloseRequested()) {
-
+        	GL11.glClearColor(0.1f, 0.2f, 0.2f, 1);
 
             GL11.glPushMatrix();
-
+            
             update();
 
             GL11.glPopMatrix();

@@ -66,7 +66,7 @@ public class Camera {
 		this.near = near;
 		this.far = far;
 		initProjection();
-		
+
 	}
 
 	private void initProjection() {
@@ -91,7 +91,7 @@ public class Camera {
 
 
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-
+		GL11.glLoadIdentity();
 
 		glRotatef(rx, 1, 0, 0);
 		glRotatef(ry, 0, 1, 0);
@@ -108,9 +108,11 @@ public class Camera {
 		boolean canmove = true;
 		float fallspeed = 0.01f;
 
+		ImageViewer.px = ((getX()*16*4));
+		ImageViewer.py = ((getZ()*16*4));
+		System.out.println(CraftSource.getCurrentWorld().getBlockAt(getX(), getY() + Block.getSize(), getZ()));
 
-
-		if (CraftSource.getCurrentWorld().getBlockAt(getX(), getY() + Block.getSize() + Block.getSize() - 0.01f, getZ()).getType().equals(BlockType.AIR)) {
+		if (CraftSource.getCurrentWorld().getBlockAt(getX(), getY() + Block.getSize() + Block.getSize() - 0.04f, getZ()).getType().equals(BlockType.AIR)) {
 			falling = true;
 		}
 
@@ -121,27 +123,27 @@ public class Camera {
 			fallspeed = 0.01f;
 		}
 
-		
-		
-		
-		
+
+
+
+
 		while(Mouse.next()){
 			//Destroy the facing block when pressing left mouse button
 			if(Mouse.getEventButtonState()){
 				if(Mouse.isButtonDown(0)){
-					CraftSource.getCurrentWorld().locations.remove(getFacingBlock());
+					CraftSource.getCurrentWorld().destroyBlock(getFacingBlock());
 				}
-			
+
 			}
 
 			if(Mouse.isButtonDown(2)){
-			if(Mouse.getDWheel() >= 120){
-				if(blockIndex < types.length-1)
-				blockIndex += 1;
-			}else{
-				if(blockIndex > 0)
-				blockIndex -= 1;
-			}
+				if(Mouse.getDWheel() >= 120){
+					if(blockIndex < types.length-1)
+						blockIndex += 1;
+				}else{
+					if(blockIndex > 0)
+						blockIndex -= 1;
+				}
 			}
 
 			//Create a block where the player is looking
@@ -158,7 +160,8 @@ public class Camera {
 				if(Mouse.getEventButtonState()){
 					if(pos != null){
 						if(CraftSource.getCurrentWorld().getBlockAtPrecise(pos.x, pos.y, pos.z).getType().equals(BlockType.AIR))
-							CraftSource.getCurrentWorld().locations.add(new Block(types[blockIndex],CraftSource.getCurrentWorld(),pos.x,pos.y,pos.z));
+							//CraftSource.getCurrentWorld().locations.add(new Block(types[blockIndex],CraftSource.getCurrentWorld(),pos.x,pos.y,pos.z));
+							CraftSource.getCurrentWorld().placeBlock(CraftSource.getCurrentWorld(), types[blockIndex], pos.x, pos.y, pos.z);
 					}
 				}
 				//if (!block.getType().equals(BlockType.AIR) && aboveblock.getType().equals(BlockType.AIR)) {
@@ -368,8 +371,8 @@ public class Camera {
 
 
 			if(!getFacingBlock().getType().equals(BlockType.AIR)){
-			GL11.glColor3f(0f,1f,0f);
-			ModelBank.cube(hv.x,hv.y,hv.z,Block.getSize()/2,types[blockIndex]);
+				GL11.glColor3f(0f,1f,0f);
+				ModelBank.cube(hv.x,hv.y,hv.z,Block.getSize()/2,types[blockIndex]);
 			}
 			return hv;
 
