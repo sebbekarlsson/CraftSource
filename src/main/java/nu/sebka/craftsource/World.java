@@ -26,7 +26,7 @@ public class World {
 	public Chunk[][] chunks;
 	public Camera cam = new Camera(80, (float) CraftSource.WIDTH / (float) CraftSource.HEIGHT, 0.03f, 1000);
 	float xrot = 0;
-	public BufferedImage map = new BufferedImage(16*5,16*5,BufferedImage.TYPE_INT_RGB);
+	public BufferedImage map = new BufferedImage(16*32,16*32,BufferedImage.TYPE_INT_RGB);
 	public BufferedImage biome = new BufferedImage(map.getWidth(),map.getHeight(),BufferedImage.TYPE_INT_RGB);
 	Random random = new Random();
 	static float rdist = 16;
@@ -34,7 +34,7 @@ public class World {
 
 	public World() {
 		cam.setY(20.325558f - Block.getSize()*5);
-//20.325558f - Block.getSize()*5
+		//20.325558f - Block.getSize()*5
 
 		chunks = new Chunk[map.getWidth()/16][map.getHeight()/16];
 
@@ -277,10 +277,11 @@ public class World {
 		for(int i = 0; i < map.getWidth()/16; i++){
 			for(int ii = 0; ii < map.getHeight()/16; ii++){
 				Chunk chunk = chunks[i][ii];
-				if(chunk != null)
+				if(chunk != null){
 					if(x >= chunk.x && x <= chunk.x+Block.getSize()*16 && z >= chunk.z && z <= chunk.z+Block.getSize()*16){
 						return chunk;
 					}
+				}
 			}
 		}
 
@@ -308,11 +309,14 @@ public class World {
 
 
 	public void destroyBlock(Block block){
-		getChunkAt(block.getX(),block.getZ()).locations.remove(block);
+		if(block != null){
+			getChunkAt(block.getX(),block.getZ()).locations.remove(block);
+		}
 	}
 
 	public void placeBlock(World world,BlockType type,float x, float y, float z){
 		Chunk chunk = getChunkAt(x,z);
+		if(chunk != null)
 		chunk.locations.add(new Block(type,world,x,y,z));
 	}
 

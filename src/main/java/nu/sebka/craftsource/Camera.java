@@ -124,14 +124,22 @@ public class Camera {
 		}
 
 
-
+		if(Keyboard.isKeyDown(Keyboard.KEY_I)){
+			CraftSource.getCurrentWorld().getCurrentChunk().locations.clear();
+			CraftSource.getCurrentWorld().getCurrentChunk().initObjects();
+		}
 
 
 		while(Mouse.next()){
 			//Destroy the facing block when pressing left mouse button
 			if(Mouse.getEventButtonState()){
 				if(Mouse.isButtonDown(0)){
-					CraftSource.getCurrentWorld().destroyBlock(getFacingBlock());
+					Block block = getFacingBlock();
+					if(block != null){
+						if(block.getType() != BlockType.AIR){
+							CraftSource.getCurrentWorld().destroyBlock(getFacingBlock());
+						}
+					}
 				}
 
 			}
