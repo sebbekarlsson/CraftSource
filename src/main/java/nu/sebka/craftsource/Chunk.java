@@ -34,7 +34,7 @@ public class Chunk {
 		this.map = map;
 		this.x = x; this.z = z;
 
-		
+
 
 
 
@@ -128,87 +128,69 @@ public class Chunk {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	public void initObjects(){
 
-		for(int i = 0; i < map.getWidth(); i++){
-			for(int ii = 0; ii < map.getHeight(); ii++){
-				float y = 0;
-				int rgb = map.getRGB(i, ii);
-				Color color = new Color(rgb);
+		if(map != null){
+			for(int i = 0; i < map.getWidth(); i++){
+				for(int ii = 0; ii < map.getHeight(); ii++){
+					float y = 0;
+					int rgb = map.getRGB(i, ii);
+					Color color = new Color(rgb);
 
-				int r = color.getRed();
-				int g = color.getGreen();
-				int b = color.getBlue();
+					int r = color.getRed();
+					int g = color.getGreen();
+					int b = color.getBlue();
+					
+					y = ((g))*Block.getSize();
 
+					BlockType t = BlockType.GRASS;
 
-
-
-
-				/*if(g == 255){
-        			y = 0;
-        		}
-        		else if(g == (255)-30){
-        			y = -Block.getSize();
-        		}
-        		else if(g == (255)-30*2){
-        			y = -(Block.getSize()*2);
-        		}c
-        		else if(g == (255)-30*3){
-        			y = -(Block.getSize()*3);
-        		}*/
-
-				y = ((g))*Block.getSize();
+					Block block = new Block(t,world,x+(i * Block.getSize()), y, z+(ii * Block.getSize()));
 
 
+					for(float by = block.getY()+Block.getSize(); by < 20.4; by+=Block.getSize()){
+						if(world == null){System.out.println("HELLO");}
+						if(world.getBlockAtPrecise(block.getX(),by,block.getZ()).getType() == BlockType.AIR){
+							BlockType type = BlockType.DIRT;
+							if(by > Block.getSize()*5){
+								type = BlockType.STONE;
+							}
+							Block bl = new Block(type,world,block.getX(),by,block.getZ());
 
-
-				//y = -((255 / g)* Block.getSize());
-				BlockType t = BlockType.GRASS;
-
-				Block block = new Block(t,world,x+(i * Block.getSize()), y, z+(ii * Block.getSize()));
-
-
-				for(float by = block.getY()+Block.getSize(); by < 20.4; by+=Block.getSize()){
-					if(world == null){System.out.println("HELLO");}
-					if(world.getBlockAtPrecise(block.getX(),by,block.getZ()).getType() == BlockType.AIR){
-						BlockType type = BlockType.DIRT;
-						if(by > Block.getSize()*5){
-							type = BlockType.STONE;
+							locations.add(bl);
 						}
-						Block bl = new Block(type,world,block.getX(),by,block.getZ());
-
-						locations.add(bl);
-					}
-				}
-
-				if(random.nextInt(64) == 0){
-					int hei = random.nextInt(2)+4;
-					int h = 0;
-					for(h = 0; h < hei; h++){
-						if(!world.getBlockAt(block.getX(), block.getY()-(Block.getSize()*h)-Block.getSize(), block.getZ()).isSolid())
-							locations.add(new Block(BlockType.LOG,world,block.getX(),block.getY()-(Block.getSize()*h)-Block.getSize(),block.getZ()));
-
 					}
 
+					if(random.nextInt(64) == 0){
+						int hei = random.nextInt(2)+4;
+						int h = 0;
+						for(h = 0; h < hei; h++){
+							if(!world.getBlockAt(block.getX(), block.getY()-(Block.getSize()*h)-Block.getSize(), block.getZ()).isSolid())
+								locations.add(new Block(BlockType.LOG,world,block.getX(),block.getY()-(Block.getSize()*h)-Block.getSize(),block.getZ()));
+
+						}
 
 
-					locations.add(new Block(BlockType.LEAF,world,block.getX(),block.getY()-(Block.getSize()*h)-Block.getSize(),block.getZ()));
 
-					locations.add(new Block(BlockType.LEAF,world,block.getX()-Block.getSize(),block.getY()-Block.getSize()*h,block.getZ()));
-					locations.add(new Block(BlockType.LEAF,world,block.getX()+Block.getSize(),block.getY()-Block.getSize()*h,block.getZ()));
-					locations.add(new Block(BlockType.LEAF,world,block.getX(),block.getY()-Block.getSize()*h,block.getZ()-Block.getSize()));
-					locations.add(new Block(BlockType.LEAF,world,block.getX(),block.getY()-Block.getSize()*h,block.getZ()+Block.getSize()));
+						locations.add(new Block(BlockType.LEAF,world,block.getX(),block.getY()-(Block.getSize()*h)-Block.getSize(),block.getZ()));
+
+						locations.add(new Block(BlockType.LEAF,world,block.getX()-Block.getSize(),block.getY()-Block.getSize()*h,block.getZ()));
+						locations.add(new Block(BlockType.LEAF,world,block.getX()+Block.getSize(),block.getY()-Block.getSize()*h,block.getZ()));
+						locations.add(new Block(BlockType.LEAF,world,block.getX(),block.getY()-Block.getSize()*h,block.getZ()-Block.getSize()));
+						locations.add(new Block(BlockType.LEAF,world,block.getX(),block.getY()-Block.getSize()*h,block.getZ()+Block.getSize()));
+
+					}
+
+
+
+					locations.add(block);
 
 				}
-
-
-
-				locations.add(block);
-
 			}
+			hasBeenLoadedBefore = true;
+			saveData();
 		}
-		hasBeenLoadedBefore = true;
-		saveData();
 	}
 
 	public boolean hasBeenLoadedBefore(){

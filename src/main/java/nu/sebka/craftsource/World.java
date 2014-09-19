@@ -2,21 +2,13 @@ package  nu.sebka.craftsource;
 
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Random;
-
 import javax.swing.JOptionPane;
-
 import nu.sebka.craftsource.blocks.Block;
 import nu.sebka.craftsource.blocks.BlockType;
 import nu.sebka.craftsource.core.Entity;
-
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
@@ -38,18 +30,10 @@ public class World {
 
 		chunks = new Chunk[map.getWidth()/16][map.getHeight()/16];
 
-
+		
 
 		for(int i = 0; i < map.getWidth(); i++){
 			for(int ii = 0; ii < map.getHeight(); ii++){
-
-
-				int old = map.getRGB(i, ii);
-				Color oldc = new Color(old);
-				if(i >0 && ii > 0){
-					old = map.getRGB(i-1, ii-1);
-					oldc = new Color(old);
-				}
 				int current = map.getRGB(i, ii);
 				Color currentcolor = new Color(current);
 
@@ -192,7 +176,7 @@ public class World {
 			}
 		}
 
-
+		
 		JOptionPane.showMessageDialog(null, "Done");
 
 		//LOADWORLDHERE

@@ -1,15 +1,11 @@
 package nu.sebka.craftsource.blocks;
 
-import java.awt.Color;
 import java.util.Random;
 
 import nu.sebka.craftsource.CraftSource;
 import nu.sebka.craftsource.World;
 import nu.sebka.craftsource.core.Entity;
 import nu.sebka.craftsource.core.ModelBank;
-import nu.sebka.craftsource.core.models.BlockModel;
-
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 

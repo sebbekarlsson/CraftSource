@@ -326,6 +326,7 @@ public class Camera {
 		return new Vector3f(xx, yy, zz);
 	}
 
+	@SuppressWarnings("unused")
 	public Vector3f getPlaceLocation(){
 		Vector3f hv = getFaceHit();
 		float xpos = 0;
