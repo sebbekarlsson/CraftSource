@@ -15,6 +15,7 @@ import java.util.Random;
 import nu.sebka.craftsource.blocks.Block;
 import nu.sebka.craftsource.blocks.BlockType;
 import nu.sebka.craftsource.core.Entity;
+import nu.sebka.craftsource.structures.Tree;
 
 public class Chunk {
 
@@ -162,26 +163,11 @@ public class Chunk {
 						}
 					}
 
-					if(random.nextInt(64) == 0){
-						int hei = random.nextInt(2)+4;
-						int h = 0;
-						for(h = 0; h < hei; h++){
-							if(!world.getBlockAt(block.getX(), block.getY()-(Block.getSize()*h)-Block.getSize(), block.getZ()).isSolid())
-								locations.add(new Block(BlockType.LOG,world,block.getX(),block.getY()-(Block.getSize()*h)-Block.getSize(),block.getZ()));
-
-						}
-
-
-
-						locations.add(new Block(BlockType.LEAF,world,block.getX(),block.getY()-(Block.getSize()*h)-Block.getSize(),block.getZ()));
-
-						locations.add(new Block(BlockType.LEAF,world,block.getX()-Block.getSize(),block.getY()-Block.getSize()*h,block.getZ()));
-						locations.add(new Block(BlockType.LEAF,world,block.getX()+Block.getSize(),block.getY()-Block.getSize()*h,block.getZ()));
-						locations.add(new Block(BlockType.LEAF,world,block.getX(),block.getY()-Block.getSize()*h,block.getZ()-Block.getSize()));
-						locations.add(new Block(BlockType.LEAF,world,block.getX(),block.getY()-Block.getSize()*h,block.getZ()+Block.getSize()));
-
+					if(random.nextInt(100) == 0){
+						Tree tree = new Tree(world,BlockType.getRandom(BlockType.LOG,BlockType.BIRCH_LOG),block.getX(),block.getY(),block.getZ());
+						tree.load();
+						tree = null;
 					}
-
 
 
 					locations.add(block);

@@ -86,14 +86,14 @@ public class Block extends Entity {
 
 
 
-			/*
-			 * SHADOWING
-			 * for(int i = 0; i < 32*2; i ++){
-			if(!(CraftSource.getCurrentWorld().getBlockAtPrecise(x, y-Block.getSize()-Block.getSize()*i, z).getType().equals(BlockType.AIR))){
-				GL11.glColor3f(0.5f, 0.5f, 0.5f);
-				break;
-			}
-		}*/
+			
+//			  for(int i = 0; i < 32*2; i ++){
+//			if(CraftSource.getCurrentWorld().getBlockAtPrecise(x, y-Block.getSize()-Block.getSize()*i, z).isSolid()){
+//				GL11.glColor3f(0.5f, 0.5f, 0.5f);
+//				
+//				break;
+//			}
+//		}
 			Block facingBlock = CraftSource.getCurrentWorld().cam.getFacingBlock();
 			if(this.equals(facingBlock)){
 				GL11.glColor3f(1, 0, 1);

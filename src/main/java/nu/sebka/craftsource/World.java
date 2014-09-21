@@ -18,19 +18,19 @@ public class World {
 	public Chunk[][] chunks;
 	public Camera cam = new Camera(80, (float) CraftSource.WIDTH / (float) CraftSource.HEIGHT, 0.03f, 1000);
 	float xrot = 0;
-	public BufferedImage map = new BufferedImage(16*32,16*32,BufferedImage.TYPE_INT_RGB);
+	public BufferedImage map = new BufferedImage(16*10,16*10,BufferedImage.TYPE_INT_RGB);
 	public BufferedImage biome = new BufferedImage(map.getWidth(),map.getHeight(),BufferedImage.TYPE_INT_RGB);
 	Random random = new Random();
 	static float rdist = 16;
 
 
 	public World() {
-		cam.setY(20.325558f - Block.getSize()*5);
+		cam.setY(20.325558f - Block.getSize()*20);
 		//20.325558f - Block.getSize()*5
 
 		chunks = new Chunk[map.getWidth()/16][map.getHeight()/16];
 
-		
+
 
 		for(int i = 0; i < map.getWidth(); i++){
 			for(int ii = 0; ii < map.getHeight(); ii++){
@@ -51,7 +51,7 @@ public class World {
 
 
 				if(random.nextInt(48) == 0){
-
+					
 
 					int d = random.nextInt(3)+1;
 					if(random.nextInt(32) == 0){
@@ -60,10 +60,18 @@ public class World {
 
 
 					if(random.nextInt(3) == 0){
-						green = new Color(100,255-d,0);
+						green = new Color(0,255-d,0);
 						map.setRGB(i, ii, green.getRGB());
 					}
 
+					boolean large = false;
+					if(random.nextInt(4) == 0){
+						large = random.nextBoolean();
+						if(large){
+							d += random.nextInt(5);
+						}
+					}
+					
 					green = new Color(0,255-d,0);
 
 
@@ -75,7 +83,13 @@ public class World {
 
 					for(int rr = 0; rr < d; rr++){
 						if(255-d < 255)
-							green = new Color(0,(255-d)+rr,0);
+							if(large == true){
+								if(random.nextInt(5) == 0){
+									green = new Color(0,(255-d)+rr,0);
+								}
+							}else{
+								green = new Color(0,(255-d)+rr,0);
+							}
 						for(double j = 0; j < 360; j += 0.1)
 						{
 
@@ -94,49 +108,7 @@ public class World {
 
 
 
-				if(random.nextInt(64) == 0){
 
-
-					int d = random.nextInt(5)+1;
-					if(random.nextInt(20) == 0){
-						d += random.nextInt(10);
-					}
-
-
-					if(random.nextInt(3) == 0){
-						green = new Color(100,255-d,0);
-						map.setRGB(i, ii, green.getRGB());
-					}
-
-					green = new Color(0,255-d,0);
-
-
-
-
-					double PI = 3.1415926535;
-					double angle, x1, y1;
-
-
-					for(int rr = 0; rr < d; rr++){
-
-
-						if(random.nextInt(10) == 0)
-							green = new Color(0,(255-d)+rr,0);
-						for(double j = 0; j < 360; j += 0.1)
-						{
-
-							angle = j;
-							x1 = rr * Math.cos(angle * PI / 180);
-							y1 = rr * Math.sin(angle * PI / 180);
-							if( i+(int)x1 >= 0 && ii+(int)y1 >= 0 && i+(int)x1 <=map.getWidth()-d && ii+(int)y1 <= map.getHeight()-d){
-								map.setRGB(i+(int)x1, ii+(int)y1, green.getRGB());
-							}
-						}
-
-
-
-					}
-				}
 
 
 				System.out.println("Drawing map...");
@@ -176,7 +148,7 @@ public class World {
 			}
 		}
 
-		
+
 		JOptionPane.showMessageDialog(null, "Done");
 
 		//LOADWORLDHERE
@@ -298,10 +270,10 @@ public class World {
 		}
 	}
 
-	public void placeBlock(World world,BlockType type,float x, float y, float z){
+	public void placeBlock(BlockType type,float x, float y, float z){
 		Chunk chunk = getChunkAt(x,z);
 		if(chunk != null)
-		chunk.locations.add(new Block(type,world,x,y,z));
+			chunk.locations.add(new Block(type,this,x,y,z));
 	}
 
 	public Block getBlockAt(double x, double y, double z) {
@@ -310,9 +282,9 @@ public class World {
 			for (int i = 0; i < chunk.locations.size(); i++) {
 				Entity location = chunk.locations.get(i);
 				if (
-						x > location.getX() - Block.getSize() / 2 && x < location.getX() + Block.getSize() &&
-						y > location.getY() - Block.getSize() / 2 && y < location.getY() + Block.getSize() &&
-						z > location.getZ() - Block.getSize() / 2 && z < location.getZ() + Block.getSize()
+						x > location.getX() - (Block.getSize() / 2)-0.035f && x < location.getX() + (Block.getSize()/2)+0.035f &&
+						y > location.getY() - (Block.getSize() / 2)-0.035f && y < location.getY() + (Block.getSize()/2)+0.035f &&
+						z > location.getZ() - (Block.getSize() / 2)-0.035f	&& z < location.getZ() + (Block.getSize()/2)+0.035f
 
 						) {
 					return (Block) location;

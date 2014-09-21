@@ -1,6 +1,9 @@
 package nu.sebka.craftsource.blocks;
 
+import java.util.Random;
+
 import nu.sebka.craftsource.TextureBank;
+
 import org.newdawn.slick.opengl.Texture;
 
 /**
@@ -10,6 +13,7 @@ public enum BlockType {
 
     AIR(null, null, null, null, null, null),
     LOG(TextureBank.LOG_TOP, TextureBank.LOG_TOP, TextureBank.LOG_SIDE, TextureBank.LOG_SIDE, TextureBank.LOG_SIDE, TextureBank.LOG_SIDE),
+    BIRCH_LOG(TextureBank.LOG_TOP, TextureBank.BIRCH, TextureBank.BIRCH, TextureBank.BIRCH, TextureBank.BIRCH, TextureBank.BIRCH),
     COBBLE(TextureBank.COBBLE_TEXTURE, TextureBank.COBBLE_TEXTURE, TextureBank.COBBLE_TEXTURE, TextureBank.COBBLE_TEXTURE, TextureBank.COBBLE_TEXTURE ,TextureBank.COBBLE_TEXTURE),
     DIRT(TextureBank.DIRT_TEXTURE, TextureBank.DIRT_TEXTURE, TextureBank.DIRT_TEXTURE, TextureBank.DIRT_TEXTURE, TextureBank.DIRT_TEXTURE ,TextureBank.DIRT_TEXTURE),
     STONE(TextureBank.STONE, TextureBank.STONE, TextureBank.STONE, TextureBank.STONE, TextureBank.STONE ,TextureBank.STONE),
@@ -26,6 +30,7 @@ public enum BlockType {
     WORKBENCH(TextureBank.WORKBENCH_TOP, TextureBank.PLANKS_TEXTURE,TextureBank.WORKBENCH_SIDE,TextureBank.WORKBENCH_SIDE,TextureBank.WORKBENCH_SIDE,TextureBank.WORKBENCH_SIDE);
 
     private Texture top, bottom, front, back, left, right;
+    static Random random = new Random();
 
     BlockType(Texture top, Texture bottom, Texture front, Texture back, Texture left, Texture right) {
         this.top = top;
@@ -58,5 +63,9 @@ public enum BlockType {
 
     public Texture getRight() {
         return right;
+    }
+    
+    public static BlockType getRandom(BlockType...b){
+    	return b[random.nextInt(b.length)];
     }
 }

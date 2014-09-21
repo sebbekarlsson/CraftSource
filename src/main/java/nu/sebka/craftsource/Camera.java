@@ -31,11 +31,15 @@ public class Camera {
 	private float rx;
 	private float ry;
 	private float rz;
+	private float dy = 0;
 
 	private float fov;
 	private float aspect;
 	private float near;
 	private float far;
+
+	float ygoal;
+	boolean jumping = false;
 	BlockType[] types = new BlockType[]{
 			BlockType.LOG,
 			BlockType.PLANKS,
@@ -104,24 +108,16 @@ public class Camera {
 
 
 	public void tick() {
-		boolean falling = false;
-		boolean canmove = true;
-		float fallspeed = 0.01f;
+
+		setY(getY() + dy);
+
 
 		ImageViewer.px = ((getX()*16*4));
 		ImageViewer.py = ((getZ()*16*4));
-		System.out.println(CraftSource.getCurrentWorld().getBlockAt(getX(), getY() + Block.getSize(), getZ()));
 
-		if (CraftSource.getCurrentWorld().getBlockAt(getX(), getY() + Block.getSize() + Block.getSize() - 0.04f, getZ()).getType().equals(BlockType.AIR)) {
-			falling = true;
-		}
 
-		if (falling) {
-			fallspeed += 0.00016f;
-			setY(getY() + fallspeed);
-		} else {
-			fallspeed = 0.01f;
-		}
+
+		
 
 
 		if(Keyboard.isKeyDown(Keyboard.KEY_I)){
@@ -169,7 +165,7 @@ public class Camera {
 					if(pos != null){
 						if(CraftSource.getCurrentWorld().getBlockAtPrecise(pos.x, pos.y, pos.z).getType().equals(BlockType.AIR))
 							//CraftSource.getCurrentWorld().locations.add(new Block(types[blockIndex],CraftSource.getCurrentWorld(),pos.x,pos.y,pos.z));
-							CraftSource.getCurrentWorld().placeBlock(CraftSource.getCurrentWorld(), types[blockIndex], pos.x, pos.y, pos.z);
+							CraftSource.getCurrentWorld().placeBlock(types[blockIndex], pos.x, pos.y, pos.z);
 					}
 				}
 				//if (!block.getType().equals(BlockType.AIR) && aboveblock.getType().equals(BlockType.AIR)) {
@@ -189,7 +185,7 @@ public class Camera {
 			GL11.glEnable(GL11.GL_CULL_FACE);
 		}
 
-		if (Keyboard.isKeyDown(Keyboard.KEY_W) && canmove) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
 			move(1, 0.01f);
 			try {
 				Mouse.setNativeCursor(null);
@@ -199,24 +195,51 @@ public class Camera {
 			}
 		}
 
-		if (Keyboard.isKeyDown(Keyboard.KEY_S) && canmove) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
 			move(-1, 0.01f);
 		}
 
-		if (Keyboard.isKeyDown(Keyboard.KEY_A) && canmove) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
 			move(2, 0.01f);
 		}
 
-		if (Keyboard.isKeyDown(Keyboard.KEY_D) && canmove) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
 			move(0, 0.01f);
 		}
 
+		Block groundblock = CraftSource.getCurrentWorld().getBlockAt(x, y+(Block.getSize()*2), z);
+		
+		
+		if(!groundblock.isSolid()){
+			dy += 0.001f;
+		}else{
+			if(!jumping){
+			dy = 0;
+			}
+		}
+		
+		if(y <= ygoal){
+			jumping = false;
+		}
+		
 		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
-			setY(getY() - Block.getSize() / 2);
+			
+			
+
+			if(groundblock.isSolid()){
+				ygoal = y-Block.getSize()*3;
+				dy = -0.020f;
+				jumping = true;
+
+
+			}
 
 		}
 
-
+		
+		if(groundblock.isSolid()){
+			jumping = false;
+		}
 
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
@@ -282,8 +305,16 @@ public class Camera {
 	}
 
 	public void move(float dir, float amt) {
-		z += amt * Math.sin(Math.toRadians(ry + 90 * dir));
-		x += amt * Math.cos(Math.toRadians(ry + 90 * dir));
+		float tempx = (float) ((float) x-(amt * Math.cos(Math.toRadians(ry + 90 * dir)))/2);
+		float tempz = (float) ((float) z-(amt * Math.sin(Math.toRadians(ry + 90 * dir)))/2);
+		tempz += amt * Math.sin(Math.toRadians(ry + 90 * dir));
+		tempx += amt * Math.cos(Math.toRadians(ry + 90 * dir));
+		Block block = CraftSource.getCurrentWorld().getBlockAt(tempx, y, tempz);
+		Block block2 = CraftSource.getCurrentWorld().getBlockAt(tempx, y+Block.getSize(), tempz);
+		if(!block.isSolid() && !block2.isSolid()){
+			z += amt * Math.sin(Math.toRadians(ry + 90 * dir));
+			x += amt * Math.cos(Math.toRadians(ry + 90 * dir));
+		}
 	}
 
 	//Get the block that the player is looking at

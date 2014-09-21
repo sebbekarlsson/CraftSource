@@ -31,6 +31,7 @@ public class TextureBank {
     public static Texture WORKBENCH_SIDE = loadTexture("png","workbench_side.png");
     public static Texture WORKBENCH_TOP = loadTexture("png","workbench_top.png");
     public static Texture STONE = loadTexture("png","stone.png");
+    public static Texture BIRCH = loadTexture("png","birch.png");
 
 
     public static Texture loadTexture(String format, String path) {
